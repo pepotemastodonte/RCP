@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -144,7 +145,12 @@ public class PoseSaver : MonoBehaviour {
             if (EsGestoCoincidente(gesto.gesto, componentes, margenError))
             {
                 Debug.Log($"El gesto coincide con un gesto guardado en {mano.PadreMano.name}.");
+                EjecutarAccion(gesto.Accion);
                 return true;
+            }
+            else
+            {
+                DesacerAccion(gesto.Accion);
             }
         }
 
@@ -181,6 +187,19 @@ public class PoseSaver : MonoBehaviour {
 
         return true; // Si no se encontró ninguna diferencia significativa, los gestos coinciden
     }
+    void EjecutarAccion(Gesto accion)
+    {
+        Debug.Log("EmpezarAccio");
+        if (accion != null)
+        {
+            accion.AccionNormal();
+        }      
+    }
+
+    void DesacerAccion(Gesto accion)
+    {
+        accion.Desactivar();
+    }
 }
 
 [System.Serializable]
@@ -192,6 +211,7 @@ public class Mano {
 
 [System.Serializable]
 public class Gestos {
+    public Gesto Accion;
     public List<GestoData> gesto = new List<GestoData>();
 }
 

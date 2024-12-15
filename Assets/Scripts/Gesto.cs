@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class Gesto : MonoBehaviour
 {
-    public void Activar()
+    public virtual void AccionNormal()
+    {
+        Debug.Log("Acción normal en Gesto");
+    }
+    public virtual void AccionConObjeto(GameObject objeto)
     {
 
     }
-    public void Desactivar()
+    public virtual void Desactivar()
     {
 
     }
+    /*
+    public void Grab(Transform objeto, Transform destino)
+    {
+
+    }
+    */
+
 }
