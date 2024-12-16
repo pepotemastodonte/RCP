@@ -56,6 +56,8 @@ namespace M2MqttUnity.Examples
         private List<string> eventMessages = new List<string>();
         private bool updateUI = false;
 
+        [SerializeField] MessageHandler messageHandler;
+
         public void TestPublish()
         {
             client.Publish("M2MQTT_Unity/test", System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
@@ -205,6 +207,16 @@ namespace M2MqttUnity.Examples
             string msg = System.Text.Encoding.UTF8.GetString(message);
             Debug.Log("Received: " + msg);
             StoreMessage(msg);
+
+            // Llama a ProcessIncomingMessage en el script MessageHandler
+            if (messageHandler != null)
+            {
+                messageHandler.ProcessIncomingMessage(msg);
+            }
+            else
+            {
+                Debug.LogWarning("MessageHandler no está asignado en el inspector.");
+            }
             if (topic == "M2MQTT_Unity/test")
             {
                 if (autoTest)
