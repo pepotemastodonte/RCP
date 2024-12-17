@@ -10,7 +10,7 @@ public class A_Grab : Gesto
     [SerializeField] ObjectDetector ObjectDetector;
     List<Transform> objects = new List<Transform>();
 
-    GrabbedObj grabbedObj = new GrabbedObj();
+    [SerializeField] Grabbable grabbedObj = new Grabbable();
     bool ManoOcupada;
 
     public override void AccionNormal()
@@ -20,35 +20,31 @@ public class A_Grab : Gesto
             Debug.Log("Mano ocupada");
             return;
         }
-        Debug.Log("Esta en A_grab");
+        //Debug.Log("Esta en A_grab");
         objects = ObjectDetector.objects;
         Transform obj = GetClosestTransform(grabPosition.position, objects);
         if (obj == null)
         {
             return;
         }
-        ConfigurarGrabbaed(obj);
-        Grab(obj, grabPosition);
+        Grab(obj);
     }
 
     public override void Desactivar()
     {
-        Debug.Log("A_grabSuelta");
         if (ManoOcupada)
         {
             Soltar();
         }      
     }
-    void Grab(Transform objeto, Transform destino)
+    void Grab(Transform obj)
     {
-        Transform obj = objeto;
-        if (!grabbedObj.Kinematic)
-        {
-            GrabbedChangeRb(true);
-        }
-        obj.position = destino.position;
-        obj.SetParent(destino);
+        grabbedObj = obj.GetComponent<Grabbable>();
+        grabbedObj.Agarrar(grabPosition);
         ManoOcupada = true;
+        Debug.Log("Agarrar");
+
+
     }
     void Soltar()
     {
@@ -56,20 +52,17 @@ public class A_Grab : Gesto
         {
             return;
         }
-        if (!grabbedObj.Kinematic)
-        {
-            GrabbedChangeRb(false);
-            Debug.Log("AAAAAAAAAAA");
-        }
-        grabbedObj.obj.SetParent(null);
+        grabbedObj.Soltar();
+        grabbedObj = null;
         ManoOcupada = false;
+        Debug.Log("Soltar");
         
     }
     public static Transform GetClosestTransform(Vector3 referencePoint, List<Transform> objects)
     {
         if (objects == null || objects.Count == 0)
         {
-            Debug.LogError("La lista está vacía o es nula.");
+            //Debug.LogError("La lista está vacía o es nula.");
             return null;
         }
 
@@ -79,34 +72,6 @@ public class A_Grab : Gesto
             .First();
 
         return closest;
-    }
-
-    void ConfigurarGrabbaed(Transform obj)
-    {
-        grabbedObj.obj = obj;
-        RbConf(obj);
-        
-    }
-
-    void GrabbedChangeRb(bool state)
-    {
-        grabbedObj.rb.isKinematic = state;
-    }
-
-    void RbConf(Transform obj)
-    {
-        if (obj.TryGetComponent<Rigidbody>(out Rigidbody rb))
-        {
-            grabbedObj.rb = rb;
-            if (rb.isKinematic)
-            {
-                grabbedObj.Kinematic = true;
-            }
-            else
-            {
-                grabbedObj.Kinematic = false;
-            } 
-        }
     }
 }
 

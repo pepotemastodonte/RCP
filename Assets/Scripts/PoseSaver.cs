@@ -144,7 +144,7 @@ public class PoseSaver : MonoBehaviour {
         {
             if (EsGestoCoincidente(gesto.gesto, componentes, margenError))
             {
-                Debug.Log($"El gesto coincide con un gesto guardado en {mano.PadreMano.name}.");
+                //Debug.Log($"El gesto coincide con un gesto guardado en {mano.PadreMano.name}.");
                 EjecutarAccion(gesto.Accion);
                 return true;
             }
@@ -154,7 +154,7 @@ public class PoseSaver : MonoBehaviour {
             }
         }
 
-        Debug.Log($"No se encontró coincidencia en los gestos guardados de {mano.PadreMano.name}.");
+        //Debug.Log($"No se encontró coincidencia en los gestos guardados de {mano.PadreMano.name}.");
         return false;
     }
 
@@ -189,7 +189,7 @@ public class PoseSaver : MonoBehaviour {
     }
     void EjecutarAccion(Gesto accion)
     {
-        Debug.Log("EmpezarAccio");
+        //Debug.Log("EmpezarAccio");
         if (accion != null)
         {
             accion.AccionNormal();
