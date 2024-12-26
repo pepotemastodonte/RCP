@@ -16,11 +16,11 @@ TagManager:
   - Spawner Contact
   - Placeable Surface
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Grabbing
+  - Grabbable
+  - Hand
+  - HandPlayer
+  - FragmentoMano
   - 
   - 
   - 

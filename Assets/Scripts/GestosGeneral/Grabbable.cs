@@ -31,23 +31,26 @@ public class Grabbable : MonoBehaviour {
     {
         if (siendoAgarrado)
         {
-            if (snapAlAgarrar)
+            Follow();          
+        }
+    }
+    void Follow()
+    {
+        if (snapAlAgarrar)
+        {
+            if (MoverEjeX && MoverEjeY && MoverEjeZ)
             {
-                if (MoverEjeX && MoverEjeY && MoverEjeZ)
-                {
-                    SeguimientoCompleto(grabObj);
-                }
-                else
-                {
-                    MoverCadaEje();
-                }
-                
+                SeguimientoCompleto(grabObj);
             }
-            if (rotarConLaMano)
+            else
             {
-                RotarCadaEje();
+                MoverCadaEje();
             }
 
+        }
+        if (rotarConLaMano)
+        {
+            RotarCadaEje();
         }
     }
     public void Agarrar(Transform grab)
